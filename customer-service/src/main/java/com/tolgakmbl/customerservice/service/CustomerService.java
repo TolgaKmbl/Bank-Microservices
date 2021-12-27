@@ -17,6 +17,7 @@ import com.tolgakmbl.customerservice.dto.CustomerDtoConverter;
 import com.tolgakmbl.customerservice.exception.CustomerNotFoundException;
 import com.tolgakmbl.customerservice.model.Customer;
 import com.tolgakmbl.customerservice.proxy.AccountServiceProxy;
+import com.tolgakmbl.customerservice.proxy.BlacklistServiceProxy;
 import com.tolgakmbl.customerservice.repository.CustomerRepository;
 
 @Service
@@ -25,14 +26,17 @@ public class CustomerService {
 	private final CustomerDtoConverter customerDtoConverter;
 	private final CustomerRepository customerRepository;
 	private final AccountServiceProxy accountServiceProxy;
+	private final BlacklistServiceProxy blacklistServiceProxy;
 
 	public CustomerService(CustomerDtoConverter customerDtoConverter, 
 			CustomerRepository customerRepository,
-			AccountServiceProxy accountServiceProxy) {
+			AccountServiceProxy accountServiceProxy,
+			BlacklistServiceProxy blacklistServiceProxy) {
 		super();
 		this.customerDtoConverter = customerDtoConverter;
 		this.customerRepository = customerRepository;
 		this.accountServiceProxy = accountServiceProxy;
+		this.blacklistServiceProxy = blacklistServiceProxy;
 	}
 	
 	public List<CustomerDto> getAllCustomers() {
@@ -52,12 +56,17 @@ public class CustomerService {
 
 	public CustomerDto register(CustomerDto customerDto) {
 		//TODO: Check for existence
-		return customerDtoConverter.convert(
-			customerRepository.save(Customer.builder()
-			.id(customerDto.getId())
-			.name(customerDto.getName())
-			.surname(customerDto.getSurname())
-			.build()));
+		if(!blacklistServiceProxy.isBlacklisted()) {
+			return customerDtoConverter.convert(
+					customerRepository.save(Customer.builder()
+					.id(customerDto.getId())
+					.name(customerDto.getName())
+					.surname(customerDto.getSurname())
+					.build()));
+		} else {
+			throw new CustomerNotFoundException("The customer is blacklisted");
+		}
+		
 	}
 	
 	public CustomerAccountDto getCustomerWithAccount(int id) {
