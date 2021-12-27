@@ -1,9 +1,6 @@
 package com.tolgakmbl.customerservice.service;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +11,8 @@ import com.tolgakmbl.customerservice.dto.CustomerAccountDto;
 import com.tolgakmbl.customerservice.dto.CustomerAccountTransactionsDto;
 import com.tolgakmbl.customerservice.dto.CustomerDto;
 import com.tolgakmbl.customerservice.dto.CustomerDtoConverter;
+import com.tolgakmbl.customerservice.exception.AccountNotFoundException;
+import com.tolgakmbl.customerservice.exception.CustomerBlacklistedException;
 import com.tolgakmbl.customerservice.exception.CustomerNotFoundException;
 import com.tolgakmbl.customerservice.model.Customer;
 import com.tolgakmbl.customerservice.proxy.AccountServiceProxy;
@@ -32,7 +31,6 @@ public class CustomerService {
 			CustomerRepository customerRepository,
 			AccountServiceProxy accountServiceProxy,
 			BlacklistServiceProxy blacklistServiceProxy) {
-		super();
 		this.customerDtoConverter = customerDtoConverter;
 		this.customerRepository = customerRepository;
 		this.accountServiceProxy = accountServiceProxy;
@@ -64,7 +62,7 @@ public class CustomerService {
 					.surname(customerDto.getSurname())
 					.build()));
 		} else {
-			throw new CustomerNotFoundException("The customer is blacklisted");
+			throw new CustomerBlacklistedException("The customer is blacklisted");
 		}
 		
 	}
@@ -80,6 +78,7 @@ public class CustomerService {
 				.build();
 	}
 	
+	//TODO: Revise
 	public CustomerAccountTransactionsDto getCustomerWithAccountTransactions(int customerId, int accountId) {
 		CustomerDto customer = findCustomerById(customerId);
 		
@@ -96,7 +95,7 @@ public class CustomerService {
 					.build();
 			
 		} else {
-			throw new CustomerNotFoundException("The account not found");
+			throw new AccountNotFoundException("The account not found");
 		}		
 		
 		

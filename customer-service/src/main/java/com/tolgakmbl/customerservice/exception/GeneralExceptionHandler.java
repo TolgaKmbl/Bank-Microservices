@@ -14,4 +14,14 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler{
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 	
+	@ExceptionHandler(CustomerBlacklistedException.class)
+    public ResponseEntity<?> customerBlacklistedExceptionHandler(CustomerBlacklistedException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+	
+	@ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<?> accountNotFoundExceptionHandler(AccountNotFoundException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+	
 }
