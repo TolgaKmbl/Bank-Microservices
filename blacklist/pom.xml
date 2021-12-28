@@ -12,7 +12,7 @@
 	<artifactId>blacklist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>blacklist</name>
-	<description>Black List microservice</description>
+	<description>Dummy blacklist controller</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
