@@ -20,13 +20,11 @@ public class Account {
 	private BigDecimal balance;
 
 	public void deposit(BigDecimal amount) {
-		System.out.println("IN DEPOSIT");
 		BigDecimal oldBalance = this.balance;
 		this.setBalance(oldBalance.add(amount));
 	}
 
 	public void withdraw(BigDecimal amount) {
-		System.out.println("IN WITHDRAW");
 		BigDecimal oldBalance = this.balance;
 		if(oldBalance.compareTo(amount) > 0) {
 			this.setBalance(oldBalance.subtract(amount));

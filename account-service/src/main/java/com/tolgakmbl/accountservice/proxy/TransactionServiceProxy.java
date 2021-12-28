@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.tolgakmbl.accountservice.dto.TransactionDto;
 
 
-@FeignClient(name="transaction-service", url="localhost:8888")
+//@FeignClient(name="transaction-service", url="localhost:8888")
+@FeignClient(name="transaction-service")
 public interface TransactionServiceProxy {
 	
 	@GetMapping("/transaction")

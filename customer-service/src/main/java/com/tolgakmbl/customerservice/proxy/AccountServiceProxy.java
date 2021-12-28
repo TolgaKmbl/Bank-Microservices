@@ -10,7 +10,8 @@ import com.tolgakmbl.customerservice.dto.AccountDto;
 import com.tolgakmbl.customerservice.dto.AccountTransactionDto;
 
 
-@FeignClient(name="account-service", url="localhost:8080")
+//@FeignClient(name="account-service", url="localhost:8080")
+@FeignClient(name="account-service")
 public interface AccountServiceProxy {
 	
 	@GetMapping("/account")

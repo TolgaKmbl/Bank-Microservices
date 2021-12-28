@@ -26,7 +26,8 @@ public class AccountActivitiesController {
 			@PathVariable("accountId") int accountId, 
 			@PathVariable("amount") BigDecimal amount) {
 		accountActivitiesService.deposit(customerId, accountId, amount);
-		return ResponseEntity.ok("Your application has been received and is being processed");
+		return ResponseEntity.ok("Your deposit application has been received and is being processed");
+
 	}
 	
 	@GetMapping("/withdraw/customerId/{customerId}/accountId/{accountId}/{amount}")
@@ -34,7 +35,7 @@ public class AccountActivitiesController {
 			@PathVariable("accountId") int accountId, 
 			@PathVariable("amount") BigDecimal amount) {
 		accountActivitiesService.withdraw(customerId, accountId, amount);
-		return ResponseEntity.ok("Your application has been received and is being processed");
+		return ResponseEntity.ok("Your withdraw application has been received and is being processed");
 	}
 	
 	@GetMapping("/transfer/customerId/{customerId}/accountFrom/{accountFrom}/accountTo/{accountTo}/{amount}")
@@ -43,6 +44,6 @@ public class AccountActivitiesController {
 			@PathVariable("accountTo") int accountTo, 
 			@PathVariable("amount") BigDecimal amount) {
 		accountActivitiesService.transfer(customerId, accountFrom, accountTo, amount);
-		return ResponseEntity.ok("Your application has been received and is being processed");
+		return ResponseEntity.ok("Your transfer application has been received and is being processed");
 	}
 }
