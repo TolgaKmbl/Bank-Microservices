@@ -29,9 +29,10 @@ public class AccountServiceApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		accountRepository.save(new Account(1, 1, BigDecimal.valueOf(1000)));
 		accountRepository.save(new Account(2, 1, BigDecimal.valueOf(3000)));
-		accountRepository.save(new Account(3, 1, BigDecimal.valueOf(4000)));
+		accountRepository.save(new Account(3, 2, BigDecimal.valueOf(4000)));
 		accountRepository.save(new Account(4, 2, BigDecimal.valueOf(1500)));
 		accountRepository.save(new Account(5, 3, BigDecimal.valueOf(1700)));
+		accountRepository.save(new Account(6, 3, BigDecimal.valueOf(750)));
 		
 		
 	}

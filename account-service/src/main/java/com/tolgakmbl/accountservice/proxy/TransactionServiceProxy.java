@@ -23,7 +23,7 @@ public interface TransactionServiceProxy {
 	@PostMapping("/transaction/create")
 	public TransactionDto createTransaction(@RequestBody TransactionDto transactionDto);
 	
-	@GetMapping("/transaction/account/{customerId}")
-	public List<TransactionDto> getTransactionByCustomerId(@PathVariable("customerId") int customerId);
+	@GetMapping("/transaction/account/{accountId}")
+	public List<TransactionDto> getTransactionsByAccountId(@PathVariable("accountId") int accountId);
 
 }

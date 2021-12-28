@@ -1,9 +1,6 @@
 package com.tolgakmbl.customerservice.service;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -14,9 +11,12 @@ import com.tolgakmbl.customerservice.dto.CustomerAccountDto;
 import com.tolgakmbl.customerservice.dto.CustomerAccountTransactionsDto;
 import com.tolgakmbl.customerservice.dto.CustomerDto;
 import com.tolgakmbl.customerservice.dto.CustomerDtoConverter;
+import com.tolgakmbl.customerservice.exception.AccountNotFoundException;
+import com.tolgakmbl.customerservice.exception.CustomerBlacklistedException;
 import com.tolgakmbl.customerservice.exception.CustomerNotFoundException;
 import com.tolgakmbl.customerservice.model.Customer;
 import com.tolgakmbl.customerservice.proxy.AccountServiceProxy;
+import com.tolgakmbl.customerservice.proxy.BlacklistServiceProxy;
 import com.tolgakmbl.customerservice.repository.CustomerRepository;
 
 @Service
@@ -25,14 +25,16 @@ public class CustomerService {
 	private final CustomerDtoConverter customerDtoConverter;
 	private final CustomerRepository customerRepository;
 	private final AccountServiceProxy accountServiceProxy;
+	private final BlacklistServiceProxy blacklistServiceProxy;
 
 	public CustomerService(CustomerDtoConverter customerDtoConverter, 
 			CustomerRepository customerRepository,
-			AccountServiceProxy accountServiceProxy) {
-		super();
+			AccountServiceProxy accountServiceProxy,
+			BlacklistServiceProxy blacklistServiceProxy) {
 		this.customerDtoConverter = customerDtoConverter;
 		this.customerRepository = customerRepository;
 		this.accountServiceProxy = accountServiceProxy;
+		this.blacklistServiceProxy = blacklistServiceProxy;
 	}
 	
 	public List<CustomerDto> getAllCustomers() {
@@ -52,12 +54,17 @@ public class CustomerService {
 
 	public CustomerDto register(CustomerDto customerDto) {
 		//TODO: Check for existence
-		return customerDtoConverter.convert(
-			customerRepository.save(Customer.builder()
-			.id(customerDto.getId())
-			.name(customerDto.getName())
-			.surname(customerDto.getSurname())
-			.build()));
+		if(!blacklistServiceProxy.isBlacklisted()) {
+			return customerDtoConverter.convert(
+					customerRepository.save(Customer.builder()
+					.id(customerDto.getId())
+					.name(customerDto.getName())
+					.surname(customerDto.getSurname())
+					.build()));
+		} else {
+			throw new CustomerBlacklistedException("The customer is blacklisted");
+		}
+		
 	}
 	
 	public CustomerAccountDto getCustomerWithAccount(int id) {
@@ -71,10 +78,10 @@ public class CustomerService {
 				.build();
 	}
 	
-	public CustomerAccountTransactionsDto getCustomerWithAccountTransactions(int customerId, int accountId) {
-		CustomerDto customer = findCustomerById(customerId);
-		
-		if(accountServiceProxy.getAccountById(accountId).getCustomerId() == customerId) {
+	//TODO: Revise
+	public CustomerAccountTransactionsDto getCustomerWithAccountTransactions(int customerId, int accountId) {		
+		CustomerDto customer = findCustomerById(customerId);			
+		if(accountServiceProxy.getAccountById(accountId).getCustomerId() == customer.getId()){			
 			AccountTransactionDto accountTransactions = accountServiceProxy.getAccountWithTransactions(customerId);
 			
 			return CustomerAccountTransactionsDto.builder()
@@ -87,7 +94,7 @@ public class CustomerService {
 					.build();
 			
 		} else {
-			throw new CustomerNotFoundException("The account not found");
+			throw new AccountNotFoundException("The account not found");
 		}		
 		
 		

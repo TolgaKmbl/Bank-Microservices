@@ -59,7 +59,7 @@ public class AccountService {
 	}
  
 	public AccountTransactionDto getAccountWithTransactions(int accountId) {
-		List<TransactionDto> transactions = transactionServiceProxy.getTransactionByCustomerId(accountId);
+		List<TransactionDto> transactions = transactionServiceProxy.getTransactionsByAccountId(accountId);
 		AccountDto account = this.getAccountById(accountId);
 		return AccountTransactionDto.builder()
 				.accountId(account.getId())
