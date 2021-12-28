@@ -46,7 +46,7 @@ public class CustomerController {
 		 return ResponseEntity.ok(customerService.getCustomerWithAccount(id));
 	 }
 	 
-	 @GetMapping("/customerWithAccountTransactions/{customerId}/{accountId}")
+	 @GetMapping("/customerWithAccountTransactions/{customerId}/accountId/{accountId}")
 	 public ResponseEntity<CustomerAccountTransactionsDto> getCustomerWithAccountAndTransactions(
 			 @PathVariable("customerId") int customerId, 
 			 @PathVariable("accountId") int accountId

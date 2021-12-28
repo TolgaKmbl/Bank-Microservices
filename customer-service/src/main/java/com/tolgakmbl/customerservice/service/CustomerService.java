@@ -79,10 +79,9 @@ public class CustomerService {
 	}
 	
 	//TODO: Revise
-	public CustomerAccountTransactionsDto getCustomerWithAccountTransactions(int customerId, int accountId) {
-		CustomerDto customer = findCustomerById(customerId);
-		
-		if(accountServiceProxy.getAccountById(accountId).getCustomerId() == customerId) {
+	public CustomerAccountTransactionsDto getCustomerWithAccountTransactions(int customerId, int accountId) {		
+		CustomerDto customer = findCustomerById(customerId);			
+		if(accountServiceProxy.getAccountById(accountId).getCustomerId() == customer.getId()){			
 			AccountTransactionDto accountTransactions = accountServiceProxy.getAccountWithTransactions(customerId);
 			
 			return CustomerAccountTransactionsDto.builder()

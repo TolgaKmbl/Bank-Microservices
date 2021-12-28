@@ -28,10 +28,17 @@ public class TransactionServiceApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		transactionRepository.save(new Transaction(1,BigDecimal.valueOf(376.5), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(1,BigDecimal.valueOf(65), TransactionType.TRANSFER));
 		transactionRepository.save(new Transaction(2,BigDecimal.valueOf(416.8), TransactionType.WITHDRAW));
-		transactionRepository.save(new Transaction(2,BigDecimal.valueOf(299.0), TransactionType.DEPOSIT));
-		transactionRepository.save(new Transaction(3,BigDecimal.valueOf(156.98), TransactionType.WITHDRAW));
-		transactionRepository.save(new Transaction(4,BigDecimal.valueOf(100.7), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(2,BigDecimal.valueOf(233.45), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(3,BigDecimal.valueOf(299.0), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(3,BigDecimal.valueOf(75.89), TransactionType.WITHDRAW));
+		transactionRepository.save(new Transaction(4,BigDecimal.valueOf(156.98), TransactionType.WITHDRAW));
+		transactionRepository.save(new Transaction(4,BigDecimal.valueOf(103.42), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(5,BigDecimal.valueOf(100.7), TransactionType.DEPOSIT));
+		transactionRepository.save(new Transaction(5,BigDecimal.valueOf(66.5), TransactionType.WITHDRAW));
+		transactionRepository.save(new Transaction(6,BigDecimal.valueOf(99.9), TransactionType.TRANSFER));
+		transactionRepository.save(new Transaction(6,BigDecimal.valueOf(123.67), TransactionType.DEPOSIT));
 		
 	}
 

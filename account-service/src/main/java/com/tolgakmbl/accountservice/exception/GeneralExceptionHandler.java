@@ -15,4 +15,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler{
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 	
+	@ExceptionHandler(TransactionFailedException.class)
+    public ResponseEntity<?> transactionFailedExceptionHandler(TransactionFailedException exception)  {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+	
 }
