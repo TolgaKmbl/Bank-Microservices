@@ -27,6 +27,7 @@ public class AccountActivitiesController {
 			@PathVariable("amount") BigDecimal amount) {
 		accountActivitiesService.deposit(customerId, accountId, amount);
 		return ResponseEntity.ok("Your deposit application has been received and is being processed");
+
 	}
 	
 	@GetMapping("/withdraw/customerId/{customerId}/accountId/{accountId}/{amount}")
