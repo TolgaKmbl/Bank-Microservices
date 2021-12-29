@@ -54,6 +54,6 @@
 
 ### TODO: 
 
-- Revise code
-- Complete the CRUD operations for each microservice
+- [ ] Revise code
+- [ ] Complete the CRUD operations for each microservice
 
